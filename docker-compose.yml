@@ -1,0 +1,27 @@
+#Jommel Amor - Docker Assignment -
+version: 3
+services:
+        flaskapp:
+                image: amorjk1/flaskapp
+                deploy:
+                        replicas: 3
+                        networks: 
+                                - app
+        nginx:
+              image: amorjk1/nginx
+              deploy:
+                     replicas: 3
+                     ports: 
+                          - 8080:80
+                     networks:
+                             - app
+                     depends_on:
+                             - flaskapp
+       reddis:
+               image: redis
+                     networks:
+                             - app
+
+network:
+        app: 
+           driver: overlay
